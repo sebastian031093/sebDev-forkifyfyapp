@@ -9,8 +9,16 @@
   "author": "Sebastian Manco Gomez",
   "license": "ISC",
   "devDependencies": {
+    "@parcel/transformer-inline-string": "^2.8.0",
     "@parcel/transformer-sass": "^2.8.0",
+    "buffer": "^5.7.1",
     "parcel": "^2.8.0",
-    "sass": "^1.56.1"
+    "process": "^0.11.10",
+    "sass": "^1.56.1",
+    "util": "^0.12.5"
+  },
+  "dependencies": {
+    "core-js": "^3.27.2",
+    "regenerator-runtime": "^0.13.11"
   }
 }
