@@ -6,14 +6,6 @@ import recipeView from './views/recipeView.js';
 // console.log(icons);
 // console.log('TEST....');
 
-const timeout = function (s) {
-  return new Promise(function (_, reject) {
-    setTimeout(function () {
-      reject(new Error(`Request took too long! Timeout after ${s} second`));
-    }, s * 1000);
-  });
-};
-
 // https://forkify-api.herokuapp.com/v2
 
 ///////////////////////////////////////
@@ -42,6 +34,9 @@ const controlRecipy = async function () {
 
 // console.log(showRecipy());
 
-['hashchange', 'load'].forEach(event => {
-  window.addEventListener(event, controlRecipy);
-});
+//Publisher-Subscriber Pattern application
+const init = function () {
+  recipeView.addHandlerMethod(controlRecipy);
+};
+
+init();

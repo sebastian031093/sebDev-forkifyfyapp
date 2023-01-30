@@ -34,6 +34,13 @@ class recipeView {
     this.#parentElement.insertAdjacentHTML('afterbegin', markup);
   }
 
+  //Funtion passing callback and called in controler
+  addHandlerMethod(callbackHendler) {
+    ['hashchange', 'load'].forEach(event => {
+      window.addEventListener(event, callbackHendler);
+    });
+  }
+
   #generateMarkup() {
     return `
         <figure class="recipe__fig">
