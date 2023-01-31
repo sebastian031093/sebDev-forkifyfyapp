@@ -27,6 +27,8 @@ const controlRecipy = async function () {
     recipeView.render(model.state.recipe);
   } catch (error) {
     console.log(error);
+    // recipeView.renderError(`${error} 💥💥💥💥`); this message don't have any meaningfull for the user's
+    recipeView.renderError();
   }
 };
 

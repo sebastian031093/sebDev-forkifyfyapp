@@ -7,10 +7,13 @@ import 'regenerator-runtime/runtime';
 class recipeView {
   #parentElement = document.querySelector('.recipe');
   #data;
+  #errorMessage = "We cound't find that recipe. please try another one!";
+  #message;
 
   render(data) {
     console.log(`Hi agin from views.....`);
     this.#data = data;
+
     const markup = this.#generateMarkup();
 
     this.#clear();
@@ -30,8 +33,44 @@ class recipeView {
       </div>
     `;
 
-    this.#parentElement.innerHTML = '';
+    this.#clear();
     this.#parentElement.insertAdjacentHTML('afterbegin', markup);
+  }
+
+  renderError(message = this.#errorMessage) {
+    const markut = `
+      <div class="error">
+        <div>
+          <svg>
+            <use href="${icons}#icon-alert-triangle"></use>
+          </svg>
+        </div>
+        <p>${message}!</p>
+      </div>
+    
+    `;
+
+    // this.#parentElement.innerHTML = '';
+    this.#clear();
+    this.#parentElement.insertAdjacentHTML('afterbegin', markut);
+  }
+
+  renderMessage(message = this.#message) {
+    const markut = `
+      <div class="message">
+        <div>
+          <svg>
+            <use href="${icons}#icon-smile"></use>
+          </svg>
+        </div>
+        <p>${message}!</p>
+      </div>
+    
+    `;
+
+    // this.#parentElement.innerHTML = '';
+    this.#clear();
+    this.#parentElement.insertAdjacentHTML('afterbegin', markut);
   }
 
   //Funtion passing callback and called in controler

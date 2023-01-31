@@ -26,5 +26,6 @@ export const loadRecipe = async function (id) {
   } catch (error) {
     //Temporary error hendling
     console.log(`${error} 💣💣💣`);
+    throw error;
   }
 };
