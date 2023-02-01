@@ -43,6 +43,9 @@ const controlSearctResult = async function () {
   try {
     resultViews.renderSpiner();
 
+    //whole protitype change..... view father class and others inheritence
+    // console.log(resultViews);
+
     //TODO: this function don't return enything, All it does is manipilated STATE
     //1) Get search QUERY
     const query = searchView.getQuery();
@@ -54,7 +57,8 @@ const controlSearctResult = async function () {
     await model.loadSearchResult(query);
 
     //3)Render results
-    console.log(model.state.search.results);
+    // console.log(model.state.search.results);
+    resultViews.render(model.state.search.results);
   } catch (error) {}
 };
 
