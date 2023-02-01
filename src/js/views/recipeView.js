@@ -1,6 +1,6 @@
 import icons from 'url:../../img/icons.svg';
 import { Fraction } from 'fractional';
-console.log(Fraction);
+// console.log(Fraction);
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
@@ -11,7 +11,7 @@ class recipeView {
   #message;
 
   render(data) {
-    console.log(`Hi agin from views.....`);
+    console.log(`Hi agin from views.....🎨🎨🎨`);
     this.#data = data;
 
     const markup = this.#generateMarkup();
