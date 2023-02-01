@@ -1,7 +1,11 @@
-import { async } from 'regenerator-runtime';
 import * as model from './model.js';
 import recipeView from './views/recipeView.js';
 import searchView from './views/searchView.js';
+import resultViews from './views/resultViews.js';
+
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
+import { async } from 'regenerator-runtime';
 
 // import svg from 'bundle-text:../img/icons.svg';
 // const logo = new URL('../img/icons.svg', import.meta.url);
@@ -37,6 +41,8 @@ const controlRecipy = async function () {
 
 const controlSearctResult = async function () {
   try {
+    resultViews.renderSpiner();
+
     //TODO: this function don't return enything, All it does is manipilated STATE
     //1) Get search QUERY
     const query = searchView.getQuery();
