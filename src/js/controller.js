@@ -7,6 +7,10 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import { async } from 'regenerator-runtime';
 
+if (module.hot) {
+  module.hot.accept();
+}
+
 // import svg from 'bundle-text:../img/icons.svg';
 // const logo = new URL('../img/icons.svg', import.meta.url);
 // console.log(icons);
@@ -59,7 +63,10 @@ const controlSearctResult = async function () {
     //3)Render results
     // console.log(model.state.search.results);
     resultViews.render(model.state.search.results);
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+    searchView.renderError();
+  }
 };
 
 // showRecipy();

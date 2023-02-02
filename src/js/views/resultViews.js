@@ -3,28 +3,25 @@ import View from './view.js';
 
 class ResultsViews extends View {
   _parentElement = document.querySelector('ul[class="results"]');
+  _errorMessage = 'No recipes found for your Query, Please try again ;)';
+  _message;
 
   _generateMarkup() {
-    // console.log(this._data);
-
-    this._data.map(this._generateMarkupPreview).join('');
+    console.log(this._data);
+    //#BUG: HERE YOU HACE A BUG, PLEASE USE THE THE BUGGER FOR FIND IT, REMOVE THE RETURN IN THE FUNTION
+    return this._data.map(this._generateMarkupPreview).join('');
   }
 
   _generateMarkupPreview(recipes) {
     return `
       <li class="preview">
-        <a class="preview__link preview__link--active" href="#23456">
+        <a class="preview__link" href="#${recipes.id}">
           <figure class="preview__fig">
             <img src="${recipes.image}" alt="${recipes.title}" />
           </figure>
           <div class="preview__data">
             <h4 class="preview__title">${recipes.title}</h4>
             <p class="preview__publisher">${recipes.publisher}</p>
-            <div class="preview__user-generated">
-              <svg>
-                <use href="${icons}#icon-user"></use>
-              </svg>
-            </div>
           </div>
         </a>
       </li>      

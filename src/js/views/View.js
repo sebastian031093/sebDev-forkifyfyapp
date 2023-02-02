@@ -3,6 +3,10 @@ import icons from 'url:../../img/icons.svg';
 export default class View {
   _data;
   render(data) {
+    console.log(data);
+    if (!data || (Array.isArray(data) && data.length == 0))
+      return this.renderError();
+
     console.log(`Hi agin from View.....🎨🎨🎨`);
     this._data = data;
 
@@ -30,6 +34,7 @@ export default class View {
   }
 
   renderError(message = this._errorMessage) {
+    console.log(message);
     const markut = `
       <div class="error">
         <div>

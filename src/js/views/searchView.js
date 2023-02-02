@@ -1,6 +1,5 @@
 class SearchViews {
   #parentEl = document.querySelector('form[class="search"]');
-
   getQuery() {
     const query = this.#parentEl.querySelector(
       'input[class="search__field"]'
