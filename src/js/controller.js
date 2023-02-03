@@ -2,6 +2,7 @@ import * as model from './model.js';
 import recipeView from './views/recipeView.js';
 import searchView from './views/searchView.js';
 import resultViews from './views/resultViews.js';
+import paginationView from './views/paginationView.js';
 
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
@@ -60,13 +61,27 @@ const controlSearctResult = async function () {
     //2) load search result
     await model.loadSearchResult(query);
 
-    //3)Render results
+    //3) Render results
     // console.log(model.state.search.results);
-    resultViews.render(model.state.search.results);
+    // resultViews.render(model.state.search.results);
+    resultViews.render(model.getSearchtResultPage(3));
+
+    //4) Render the initial pagination buttons
+    paginationView.render(model.state.search);
   } catch (error) {
     console.log(error);
     searchView.renderError();
   }
+};
+
+const controlPgination = function (goToPage = '') {
+  console.log('Hi from pag controler ' + goToPage);
+  //1) Render NEW results
+  // console.log(model.getSearchtResultPage(goToPage));
+  resultViews.render(model.getSearchtResultPage(goToPage));
+
+  //2) Render NEW  pagination buttons
+  paginationView.render(model.state.search);
 };
 
 // showRecipy();
@@ -77,6 +92,7 @@ const controlSearctResult = async function () {
 const init = function () {
   recipeView.addHandlerMethod(controlRecipy);
   searchView.addHandlerSearch(controlSearctResult);
+  paginationView.addHandlerClick(controlPgination);
 };
 
 // controlSearctResult();
