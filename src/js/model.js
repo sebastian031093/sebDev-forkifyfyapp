@@ -73,3 +73,14 @@ export const getSearchtResultPage = function (page = state.search.page) {
 
 // loadSearchResult('avocado');
 // console.log(state.search.query);
+
+export const updateServings = function (newServings) {
+  console.log(state.recipe.servings);
+
+  state.recipe.ingredients.forEach(ing => {
+    ing.quantity = (ing.quantity * newServings) / state.recipe.servings;
+    // newQt = oldQt * newServing / oldServings // 2 * 8 / 4 = 4
+
+    state.recipe.servings = newServings;
+  });
+};

@@ -37,6 +37,8 @@ const controlRecipy = async function () {
     //2) Rendering recipe
     //TODO: this function don't return enything, All it does is manipilated STATE
     recipeView.render(model.state.recipe);
+    //TEST: controler
+    // controlServings();
   } catch (error) {
     console.log(error);
     // recipeView.renderError(`${error} 💥💥💥💥`); this message don't have any meaningfull for the user's
@@ -88,11 +90,26 @@ const controlPgination = function (goToPage = '') {
 
 // console.log(showRecipy());
 
+const controlServings = function (newServings) {
+  //1)Update the recipe Servings (in state)
+
+  //here you controle the num of serving fron the view.
+  model.updateServings(newServings);
+
+  // 2)Update the recipe in the view
+  recipeView.render(model.state.recipe);
+  // console.log(model.state.recipe.servings);
+};
+
 //Publisher-Subscriber Pattern application
 const init = function () {
   recipeView.addHandlerMethod(controlRecipy);
+  recipeView.addHendlerUpDateServings(controlServings);
   searchView.addHandlerSearch(controlSearctResult);
   paginationView.addHandlerClick(controlPgination);
+
+  //BUG: ASYNCHROUNOS BEAHEVOR HERE YOU DON'T HAVE THE DATE DANGGER
+  //controlServings();
 };
 
 // controlSearctResult();

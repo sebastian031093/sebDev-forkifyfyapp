@@ -44,6 +44,7 @@ class paginationView extends View {
     }
 
     //last page
+    //BUG: data-goto="", create a bug an find when you have this mistake data-goto''
     if (currentPage === numPages && numPages > 1) {
       return `
           <button data-goto="${

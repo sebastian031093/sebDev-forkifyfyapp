@@ -14,6 +14,22 @@ class recipeView extends View {
     });
   }
 
+  addHendlerUpDateServings(callbackHendler) {
+    this._parentElement.addEventListener('click', event => {
+      event.preventDefault();
+      const btn = event.target.closest('.btn--update-servings');
+      if (!btn) return;
+      console.log(btn);
+      //Here you need get the new servgings from the UI
+      //how will we determine the new servings? here we need conenct the UI whit the code and as allways, for that we use the special data propertis
+
+      //BUG: danger be carfull when you wanna use destructuring in this cases let {updateTo} = +btn.dataset, here + opearator can be convert button element in number and this trigger NaN
+      const updateTo = +btn.dataset.updateTo;
+      // console.log(updateTo);
+      if (updateTo > 0) callbackHendler(updateTo);
+    });
+  }
+
   _generateMarkup() {
     return `
         <figure class="recipe__fig">
@@ -45,12 +61,16 @@ class recipeView extends View {
             <span class="recipe__info-text">servings</span>
 
             <div class="recipe__info-buttons">
-              <button class="btn--tiny btn--increase-servings">
+              <button class="btn--tiny btn--update-servings" data-update-to="${
+                this._data.servings - 1
+              }">
                 <svg>
                   <use href="${icons}#icon-minus-circle"></use>
                 </svg>
               </button>
-              <button class="btn--tiny btn--increase-servings">
+              <button class="btn--tiny btn--update-servings" data-update-to="${
+                this._data.servings + 1
+              }">
                 <svg>
                   <use href="${icons}#icon-plus-circle"></use>
                 </svg>
