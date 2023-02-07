@@ -2,6 +2,7 @@ import icons from 'url:../../img/icons.svg';
 
 export default class View {
   _data;
+
   render(data) {
     console.log(data);
     if (!data || (Array.isArray(data) && data.length == 0))
@@ -14,6 +15,45 @@ export default class View {
 
     this._clear();
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
+  }
+
+  //TODO: How to work this is super important (Developing a DOM Updating Algorithm)
+  update(data) {
+    this._data = data;
+
+    const newMarkup = this._generateMarkup();
+
+    //document.createRange() here return RANGE
+    const newDOM = document.createRange().createContextualFragment(newMarkup);
+    const newElemnts = Array.from(newDOM.querySelectorAll('*'));
+    const currentElement = Array.from(
+      this._parentElement.querySelectorAll('*')
+    );
+
+    // console.log(newElemnts);
+    // console.log(currentElement);
+
+    newElemnts.forEach((newEl, index) => {
+      const currenEl = currentElement[index];
+
+      // console.log(currenEl, newEl.isEqualNode(currenEl));
+
+      // Updates changed TEXT
+      if (
+        !newEl.isEqualNode(currenEl) &&
+        newEl.firstChild.nodeValue.trim() != ''
+      ) {
+        console.log('🍔', newEl.firstChild?.nodeValue.trim());
+
+        currenEl.textContent = newEl.textContent;
+      }
+
+      // Updates change ATTRIBUTES
+      if (!newEl.isEqualNode(currenEl))
+        Array.from(newEl.attributes).forEach(attr =>
+          currenEl.setAttribute(attr.name, attr.value)
+        );
+    });
   }
 
   _clear() {

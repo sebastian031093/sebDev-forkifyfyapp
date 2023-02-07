@@ -31,6 +31,10 @@ const controlRecipy = async function () {
 
     recipeView.renderSpiner();
 
+    //0)Update results view to marck selected search results
+
+    resultViews.update(model.getSearchtResultPage());
+
     //1)Loading recipe
     await model.loadRecipe(id);
 
@@ -66,7 +70,7 @@ const controlSearctResult = async function () {
     //3) Render results
     // console.log(model.state.search.results);
     // resultViews.render(model.state.search.results);
-    resultViews.render(model.getSearchtResultPage(3));
+    resultViews.render(model.getSearchtResultPage());
 
     //4) Render the initial pagination buttons
     paginationView.render(model.state.search);
@@ -97,8 +101,9 @@ const controlServings = function (newServings) {
   model.updateServings(newServings);
 
   // 2)Update the recipe in the view
-  recipeView.render(model.state.recipe);
+  // recipeView.render(model.state.recipe);
   // console.log(model.state.recipe.servings);
+  recipeView.update(model.state.recipe);
 };
 
 //Publisher-Subscriber Pattern application
