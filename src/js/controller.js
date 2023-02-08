@@ -3,6 +3,7 @@ import recipeView from './views/recipeView.js';
 import searchView from './views/searchView.js';
 import resultViews from './views/resultViews.js';
 import paginationView from './views/paginationView.js';
+import bookmarksView from './views/bookmarksView.js';
 
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
@@ -34,6 +35,7 @@ const controlRecipy = async function () {
     //0)Update results view to marck selected search results
 
     resultViews.update(model.getSearchtResultPage());
+    bookmarksView.update(model.state.bookMarks);
 
     //1)Loading recipe
     await model.loadRecipe(id);
@@ -60,9 +62,9 @@ const controlSearctResult = async function () {
     //TODO: this function don't return enything, All it does is manipilated STATE
     //1) Get search QUERY
     const query = searchView.getQuery();
-
     if (!query) return;
-    console.log(query);
+
+    // console.log(query);
 
     //2) load search result
     await model.loadSearchResult(query);
@@ -106,11 +108,28 @@ const controlServings = function (newServings) {
   recipeView.update(model.state.recipe);
 };
 
+const controlAddBockmark = function () {
+  //1) add/remove bookmark.
+  if (!model.state.recipe.bookmarked) model.addBookMark(model.state.recipe);
+  else model.deleteBookMark(model.state.recipe.id);
+  // console.log(model.state.recipe);
+
+  //2) Update recipe view.
+  // recipeView.render(model.state.recipe);
+  recipeView.update(model.state.recipe);
+
+  // 3) Render the bookmarks.
+  bookmarksView.render(model.state.bookMarks);
+};
+
 //Publisher-Subscriber Pattern application
 const init = function () {
   recipeView.addHandlerMethod(controlRecipy);
   recipeView.addHendlerUpDateServings(controlServings);
+  recipeView.addHendlerAddBoocmark(controlAddBockmark);
+
   searchView.addHandlerSearch(controlSearctResult);
+
   paginationView.addHandlerClick(controlPgination);
 
   //BUG: ASYNCHROUNOS BEAHEVOR HERE YOU DON'T HAVE THE DATE DANGGER

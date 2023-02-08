@@ -11,6 +11,8 @@ export const state = {
     page: 1,
     resultPerPage: RES_PER_PAGE,
   },
+
+  bookMarks: [],
 };
 
 export const loadRecipe = async function (id) {
@@ -29,6 +31,10 @@ export const loadRecipe = async function (id) {
       cookingTime: recipe.cooking_time,
       ingredients: recipe.ingredients,
     };
+
+    if (state.bookMarks.some(boockmarck => boockmarck.id == id))
+      state.recipe.bookmarked = true;
+    else state.recipe.bookmarked = false;
 
     console.log(`Hi from module} ⚙🤖`);
   } catch (error) {
@@ -54,6 +60,8 @@ export const loadSearchResult = async function (query) {
         image: elem.image_url,
       };
     });
+
+    state.search.page = 1;
   } catch (error) {
     console.log(`${error} 💣💣💣`);
     throw error;
@@ -62,11 +70,11 @@ export const loadSearchResult = async function (query) {
 
 export const getSearchtResultPage = function (page = state.search.page) {
   state.search.page = page;
-
+  // console.log(state.search.page);
   const start = (page - 1) * state.search.resultPerPage; //0;
   const end = page * state.search.resultPerPage; //9;
 
-  console.log(start, end);
+  // console.log(start, end);
 
   return state.search.results.slice(start, end);
 };
@@ -84,4 +92,22 @@ export const updateServings = function (newServings) {
     // console.log(`new ${ing.quantity}`);
   });
   state.recipe.servings = newServings;
+};
+
+export const addBookMark = function (recipe) {
+  //Add boockmat
+  state.bookMarks.push(recipe);
+  console.log(recipe);
+
+  //Marck current recipe as a boockmarked
+  if (recipe.id == state.recipe.id) state.recipe.bookmarked = true;
+};
+
+export const deleteBookMark = function (id) {
+  //Delete boockmark
+  const index = state.bookMarks.findIndex(element => element.id === id);
+  state.bookMarks.splice(index, 1);
+
+  //Marck current recipe as NOT boockmarked
+  if (id == state.recipe.id) state.recipe.bookmarked = false;
 };

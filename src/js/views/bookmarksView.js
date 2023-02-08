@@ -1,9 +1,9 @@
 import icons from 'url:../../img/icons.svg';
 import View from './view.js';
 
-class ResultsViews extends View {
-  _parentElement = document.querySelector('ul[class="results"]');
-  _errorMessage = 'No recipes found for your Query, Please try again ;)';
+class BoomarksView extends View {
+  _parentElement = document.querySelector('ul[class="bookmarks__list"]');
+  _errorMessage = 'No boockmarks yes, Find a nice recipe and bookmark it ;)';
   _message;
 
   _generateMarkup() {
@@ -33,4 +33,4 @@ class ResultsViews extends View {
   }
 }
 
-export default new ResultsViews();
+export default new BoomarksView();

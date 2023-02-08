@@ -24,9 +24,9 @@ class paginationView extends View {
       this._data.results.length / this._data.resultPerPage
     );
 
-    console.log(numPages);
+    // console.log(numPages);
 
-    console.log(this._data.page);
+    // console.log(this._data.page);
     //TODO: Create a generate method like name generateButton and refactor this code :)
     //Page 1 and there are other pages
 

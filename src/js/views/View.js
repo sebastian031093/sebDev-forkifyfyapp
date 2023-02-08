@@ -4,11 +4,11 @@ export default class View {
   _data;
 
   render(data) {
-    console.log(data);
+    // console.log(data);
     if (!data || (Array.isArray(data) && data.length == 0))
       return this.renderError();
 
-    console.log(`Hi agin from View.....🎨🎨🎨`);
+    // console.log(`Hi agin from View.....🎨🎨🎨`);
     this._data = data;
 
     const markup = this._generateMarkup();
@@ -20,6 +20,7 @@ export default class View {
   //TODO: How to work this is super important (Developing a DOM Updating Algorithm)
   update(data) {
     this._data = data;
+    // console.log(this._data);
 
     const newMarkup = this._generateMarkup();
 
@@ -41,7 +42,7 @@ export default class View {
       // Updates changed TEXT
       if (
         !newEl.isEqualNode(currenEl) &&
-        newEl.firstChild.nodeValue.trim() != ''
+        newEl.firstChild?.nodeValue.trim() !== ''
       ) {
         console.log('🍔', newEl.firstChild?.nodeValue.trim());
 
