@@ -12,6 +12,9 @@ class BoomarksView extends View {
     return this._data.map(this._generateMarkupPreview).join('');
   }
 
+  addHendlerRender(callbackHendler) {
+    window.addEventListener('load', callbackHendler);
+  }
   _generateMarkupPreview(recipes) {
     const id = window.location.hash.slice(1);
 

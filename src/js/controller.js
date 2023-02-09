@@ -33,16 +33,18 @@ const controlRecipy = async function () {
     recipeView.renderSpiner();
 
     //0)Update results view to marck selected search results
-
     resultViews.update(model.getSearchtResultPage());
+
+    //1) Updating bookmarks view
     bookmarksView.update(model.state.bookMarks);
 
-    //1)Loading recipe
+    //2)Loading recipe
     await model.loadRecipe(id);
 
-    //2) Rendering recipe
+    //3) Rendering recipe
     //TODO: this function don't return enything, All it does is manipilated STATE
     recipeView.render(model.state.recipe);
+
     //TEST: controler
     // controlServings();
   } catch (error) {
@@ -122,8 +124,13 @@ const controlAddBockmark = function () {
   bookmarksView.render(model.state.bookMarks);
 };
 
+const controlBookmarks = function () {
+  bookmarksView.render(model.state.bookMarks);
+};
+
 //Publisher-Subscriber Pattern application
 const init = function () {
+  bookmarksView.addHendlerRender(controlAddBockmark);
   recipeView.addHandlerMethod(controlRecipy);
   recipeView.addHendlerUpDateServings(controlServings);
   recipeView.addHendlerAddBoocmark(controlAddBockmark);
