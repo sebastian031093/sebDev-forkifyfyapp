@@ -119,14 +119,14 @@ export const deleteBookMark = function (id) {
 };
 
 const init = function () {
-  const storage = localStorage.getItem('boockmark');
+  const storage = localStorage.getItem('bookmarks');
   if (storage) state.bookMarks = JSON.parse(storage);
 };
 
 init();
 
 const clearBookmarks = function () {
-  localStorage.clear('boockmark');
+  localStorage.clear('bookmarks');
 };
 
 // clearBookmarks();

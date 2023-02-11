@@ -130,7 +130,7 @@ const controlBookmarks = function () {
 
 //Publisher-Subscriber Pattern application
 const init = function () {
-  bookmarksView.addHendlerRender(controlAddBockmark);
+  bookmarksView.addHendlerRender(controlBookmarks);
   recipeView.addHandlerMethod(controlRecipy);
   recipeView.addHendlerUpDateServings(controlServings);
   recipeView.addHendlerAddBoocmark(controlAddBockmark);
