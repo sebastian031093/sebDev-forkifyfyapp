@@ -129,6 +129,17 @@ const controlBookmarks = function () {
   bookmarksView.render(model.state.bookMarks);
 };
 
+const controlAddRecipe = async function (newRecipeData) {
+  try {
+    // console.log(newRecipeData);
+    //Upload the new recipedata
+    await model.uploadRecipe(newRecipeData);
+  } catch (error) {
+    console.log('💥', error);
+    recipeView.renderError(error);
+  }
+};
+
 //Publisher-Subscriber Pattern application
 const init = function () {
   bookmarksView.addHendlerRender(controlBookmarks);
@@ -142,6 +153,8 @@ const init = function () {
 
   //BUG: ASYNCHROUNOS BEAHEVOR HERE YOU DON'T HAVE THE DATE DANGGER
   //controlServings();
+
+  addRecipeView.addHandlerUpLoad(controlAddRecipe);
 };
 
 // controlSearctResult();
