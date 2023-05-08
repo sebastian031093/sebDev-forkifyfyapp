@@ -1,6 +1,6 @@
 import icons from 'url:../../img/icons.svg';
 import { Fraction } from 'fractional';
-import View from './view.js';
+import View from './View.js';
 
 class recipeView extends View {
   _parentElement = document.querySelector('.recipe');
@@ -34,9 +34,9 @@ class recipeView extends View {
     this._parentElement.addEventListener('click', function (event) {
       event.preventDefault();
       const btn = event.target.closest('.btn--bookmark');
-      console.log(btn);
+      // console.log(btn);
       if (!btn) return;
-      console.log('Hi from BoockMark');
+      // console.log('Hi from BoockMark');
       callbackHendler();
     });
   }

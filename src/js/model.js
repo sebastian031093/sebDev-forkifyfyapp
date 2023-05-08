@@ -1,4 +1,3 @@
-import { async } from 'regenerator-runtime';
 import { API_URL, KEY, RES_PER_PAGE } from './config.js';
 import { getJson, sendJson } from './helpers.js';
 
@@ -15,28 +14,32 @@ export const state = {
   bookMarks: [],
 };
 
+const createRecipeObject = function (data) {
+  const { recipe } = data.data;
+  return {
+    id: recipe.id,
+    title: recipe.title,
+    publisher: recipe.publisher,
+    sourceURL: recipe.source_url,
+    image: recipe.image_url,
+    servings: recipe.servings,
+    cookingTime: recipe.cooking_time,
+    ingredients: recipe.ingredients,
+    ...(recipe.key && { key: recipe.key }),
+  };
+};
+
 export const loadRecipe = async function (id) {
   try {
     //
     const data = await getJson(`${API_URL}${id}`);
-
-    const { recipe } = data.data;
-    state.recipe = {
-      id: recipe.id,
-      title: recipe.title,
-      publisher: recipe.publisher,
-      sourceURL: recipe.source_url,
-      image: recipe.image_url,
-      servings: recipe.servings,
-      cookingTime: recipe.cooking_time,
-      ingredients: recipe.ingredients,
-    };
+    state.recipe = createRecipeObject(data);
 
     if (state.bookMarks.some(boockmarck => boockmarck.id == id))
       state.recipe.bookmarked = true;
     else state.recipe.bookmarked = false;
 
-    console.log(`Hi from module} ⚙🤖`);
+    // console.log(`Hi from module} ⚙🤖`);
   } catch (error) {
     //Temporary error hendling
     console.log(`${error} 💣💣💣`);
@@ -101,10 +104,13 @@ const persistBookmarks = function () {
 export const addBookMark = function (recipe) {
   //Add boockmat
   state.bookMarks.push(recipe);
-  console.log(recipe);
+  // console.log(recipe);
 
   //Marck current recipe as a boockmarked
   if (recipe.id == state.recipe.id) state.recipe.bookmarked = true;
+
+  // console.log(state.recipe);
+
   persistBookmarks();
 };
 
@@ -137,7 +143,8 @@ export const uploadRecipe = async function (newRecipe) {
     // console.log(Object.entries(newRecipe));
     const ingredients = Object.entries(newRecipe)
       .filter(entry => {
-        if (entry[0].startsWith('ingredient') && entry[1] != '') {
+        if (entry[0].startsWith('ingredient') && entry[1] !== '') {
+          // console.log(entry);
           return entry;
         }
       })
@@ -161,6 +168,7 @@ export const uploadRecipe = async function (newRecipe) {
       source_url: newRecipe.sourceURL,
       image_url: newRecipe.image,
       publisher: newRecipe.publisher,
+      source_url: newRecipe.sourceUrl,
       cooking_time: +newRecipe.cookingTime,
       servings: +newRecipe.servings,
       ingredients,
@@ -169,9 +177,12 @@ export const uploadRecipe = async function (newRecipe) {
     // console.log(recipe);
 
     const data = await sendJson(`${API_URL}?key=${KEY}`, recipe);
-    console.log(data);
+    // console.log(data);
+
+    state.recipe = createRecipeObject(data);
+    addBookMark(state.recipe);
   } catch (error) {
-    // console.log('💥', error);
+    console.log('💥', error);
     throw error;
   }
 };

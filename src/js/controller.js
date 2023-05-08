@@ -5,10 +5,10 @@ import resultViews from './views/resultViews.js';
 import paginationView from './views/paginationView.js';
 import bookmarksView from './views/bookmarksView.js';
 import addRecipeView from './views/addRecipeView.js';
+import { MODAL_CLOSE_SEC } from './config.js';
 
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
-import { async } from 'regenerator-runtime';
 
 if (module.hot) {
   module.hot.accept();
@@ -27,7 +27,7 @@ const controlRecipy = async function () {
   //Loading the recipe
   try {
     const id = window.location.hash.slice(1);
-    console.log(id);
+    // console.log(id);
 
     if (!id) return;
 
@@ -86,7 +86,7 @@ const controlSearctResult = async function () {
 };
 
 const controlPgination = function (goToPage = '') {
-  console.log('Hi from pag controler ' + goToPage);
+  // console.log('Hi from pag controler ' + goToPage);
   //1) Render NEW results
   // console.log(model.getSearchtResultPage(goToPage));
   resultViews.render(model.getSearchtResultPage(goToPage));
@@ -131,12 +131,26 @@ const controlBookmarks = function () {
 
 const controlAddRecipe = async function (newRecipeData) {
   try {
+    addRecipeView.renderSpiner();
+
     // console.log(newRecipeData);
     //Upload the new recipedata
     await model.uploadRecipe(newRecipeData);
+    console.log(model.state.recipe);
+
+    // Render recipe
+    recipeView.render(model.state.recipe);
+
+    // Succers message
+    addRecipeView.renderMessage();
+
+    // Close form wondow
+    setTimeout(function () {
+      addRecipeView.toggle();
+    }, MODAL_CLOSE_SEC * 1000);
   } catch (error) {
-    console.log('💥', error);
-    recipeView.renderError(error);
+    // console.log('💥', error);
+    addRecipeView.renderError(error.message);
   }
 };
 

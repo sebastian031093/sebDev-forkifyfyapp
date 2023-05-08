@@ -1,5 +1,6 @@
 import icons from 'url:../../img/icons.svg';
-import View from './view.js';
+import View from './View.js';
+import previewView from './previewView.js';
 
 class BoomarksView extends View {
   _parentElement = document.querySelector('ul[class="bookmarks__list"]');
@@ -9,30 +10,13 @@ class BoomarksView extends View {
   _generateMarkup() {
     // console.log(this._data);
     //#BUG: HERE YOU HACE A BUG, PLEASE USE THE THE BUGGER FOR FIND IT, REMOVE THE RETURN IN THE FUNTION
-    return this._data.map(this._generateMarkupPreview).join('');
+    return this._data
+      .map(results => previewView.render(results, false))
+      .join('');
   }
 
   addHendlerRender(callbackHendler) {
     window.addEventListener('load', callbackHendler);
-  }
-  _generateMarkupPreview(recipes) {
-    const id = window.location.hash.slice(1);
-
-    return `
-      <li class="preview">
-        <a class="preview__link ${
-          recipes.id == id ? 'preview__link--active' : ''
-        } " href="#${recipes.id}">
-          <figure class="preview__fig">
-            <img src="${recipes.image}" alt="${recipes.title}" />
-          </figure>
-          <div class="preview__data">
-            <h4 class="preview__title">${recipes.title}</h4>
-            <p class="preview__publisher">${recipes.publisher}</p>
-          </div>
-        </a>
-      </li>      
-      `;
   }
 }
 

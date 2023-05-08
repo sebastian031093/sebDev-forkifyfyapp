@@ -1,5 +1,6 @@
 import icons from 'url:../../img/icons.svg';
-import View from './view.js';
+import View from './View.js';
+import previewView from './previewView.js';
 
 class ResultsViews extends View {
   _parentElement = document.querySelector('ul[class="results"]');
@@ -9,27 +10,9 @@ class ResultsViews extends View {
   _generateMarkup() {
     // console.log(this._data);
     //#BUG: HERE YOU HACE A BUG, PLEASE USE THE THE BUGGER FOR FIND IT, REMOVE THE RETURN IN THE FUNTION
-    return this._data.map(this._generateMarkupPreview).join('');
-  }
-
-  _generateMarkupPreview(recipes) {
-    const id = window.location.hash.slice(1);
-
-    return `
-      <li class="preview">
-        <a class="preview__link ${
-          recipes.id == id ? 'preview__link--active' : ''
-        } " href="#${recipes.id}">
-          <figure class="preview__fig">
-            <img src="${recipes.image}" alt="${recipes.title}" />
-          </figure>
-          <div class="preview__data">
-            <h4 class="preview__title">${recipes.title}</h4>
-            <p class="preview__publisher">${recipes.publisher}</p>
-          </div>
-        </a>
-      </li>      
-      `;
+    return this._data
+      .map(results => previewView.render(results, false))
+      .join('');
   }
 }
 

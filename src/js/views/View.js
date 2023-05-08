@@ -3,15 +3,16 @@ import icons from 'url:../../img/icons.svg';
 export default class View {
   _data;
 
-  render(data) {
+  render(data, render = true) {
     // console.log(data);
     if (!data || (Array.isArray(data) && data.length == 0))
       return this.renderError();
 
     // console.log(`Hi agin from View.....🎨🎨🎨`);
     this._data = data;
-
     const markup = this._generateMarkup();
+
+    if (!render) return markup;
 
     this._clear();
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
@@ -44,7 +45,7 @@ export default class View {
         !newEl.isEqualNode(currenEl) &&
         newEl.firstChild?.nodeValue.trim() !== ''
       ) {
-        console.log('🍔', newEl.firstChild?.nodeValue.trim());
+        // console.log('🍔', newEl.firstChild?.nodeValue.trim());
 
         currenEl.textContent = newEl.textContent;
       }
@@ -75,7 +76,7 @@ export default class View {
   }
 
   renderError(message = this._errorMessage) {
-    console.log(message);
+    // console.log(message);
     const markut = `
       <div class="error">
         <div>
