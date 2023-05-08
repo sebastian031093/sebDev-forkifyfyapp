@@ -32,7 +32,7 @@ const createRecipeObject = function (data) {
 export const loadRecipe = async function (id) {
   try {
     //
-    const data = await getJson(`${API_URL}${id}`);
+    const data = await getJson(`${API_URL}${id}?key=${KEY}`);
     state.recipe = createRecipeObject(data);
 
     if (state.bookMarks.some(boockmarck => boockmarck.id == id))
@@ -52,7 +52,7 @@ export const loadSearchResult = async function (query) {
     //https://forkify-api.herokuapp.com/api/v2/recipes?search=pizza&key=<insert your key>
 
     state.search.query = query;
-    const data = await getJson(`${API_URL}?search=${query}`);
+    const data = await getJson(`${API_URL}?search=${query}&key=${KEY}`);
     // console.log(data);
 
     state.search.results = data.data.recipes.map(elem => {
@@ -61,6 +61,7 @@ export const loadSearchResult = async function (query) {
         title: elem.title,
         publisher: elem.publisher,
         image: elem.image_url,
+        ...(elem.key && { key: elem.key }),
       };
     });
 
