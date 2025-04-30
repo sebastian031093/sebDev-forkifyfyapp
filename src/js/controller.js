@@ -10,6 +10,7 @@ import { MODAL_CLOSE_SEC } from './config.js';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
+//TODO: HERE START MY JOURNEY 
 if (module.hot) {
   module.hot.accept();
 }
